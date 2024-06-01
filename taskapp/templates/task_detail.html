@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px 20px;
+            color: #fff;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .task-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .update-button {
+            background-color: #28a745;
+        }
+
+        .update-button:hover {
+            background-color: #1a8032;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+
+        .delete-button:hover {
+            background-color: #a72532;
+        }
+
+        .back-button {
+            background-color: #007bff;
+        }
+
+        .back-button:hover {
+            background-color: #0460c2;
+        }
+
+        /* Add margin to create space between navbar and content */
+        .content {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">
+            <img src="https://rejola.com/wp-content/uploads/2020/09/Rejola_logo.png" alt="Logo" style="width: 100px; height: auto;">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary rounded" href="{% url 'task_list' %}" style="color:white;">Back to Task List</a>
+                </li>
+            </ul>
+        </div>
+    </nav> 
+    <div class="content">
+        <div class="task-details">
+            <h2>{{ task.task_name }} </h2>
+            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            <p><strong>Priority:</strong> {{ task.priority }}</p>
+            <p><strong>Status:</strong> {{ task.status }}</p>
+            <p><strong>Remarks:</strong> {{ task.remarks }}</p><br>
+
+            <h3>Update History</h3>
+            <div class="action-buttons ml-auto">
+                <a class="btn btn-success update-button rounded" href="{% url 'update_task' task_id=task.id %}" style="color:white;">Update Task</a>
+                <a class="btn btn-danger delete-button rounded" href="{% url 'confirm_delete' task_id=task.id %}" style="color:white;">Delete Task</a>
+            </div>
+            
+            {% for update_entry in task.update_history|dictsortreversed:"timestamp" %}
+                <li>
+                    Updated on {{ update_entry.timestamp }}:
+                {% for field, values in update_entry.updated_fields.items %}
+                    {{ field }} from {{ values.to.from }} to {{ values.from }};
+                {% endfor %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

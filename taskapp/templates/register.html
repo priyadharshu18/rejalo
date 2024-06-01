@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container.register {
+            padding: 20px;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="https://rejola.com/wp-content/uploads/2020/09/Rejola_logo.png" alt="Logo" style="width: 100px"; height: auto;>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" style="color:white">Welcome</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container register">
+        <form method="post">
+            {% csrf_token %}
+            <h2 class="mt-4" >Register</h2>
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" class="form-control" id="id_username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password1">Password:</label>
+                <input type="password" class="form-control" id="id_password1" name="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="id_password2">Confirm Password:</label>
+                <input type="password" class="form-control" id="id_password2" name="password2" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="login-link mt-3">
+                Already have an account? <a href="{% url 'login' %}">Login</a>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
